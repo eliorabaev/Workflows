@@ -10,35 +10,35 @@ on:
       
 jobs:
   quality-checks-v1:
-    - name: Run Quality Checks With Python 3.9 and Lint
+      name: Run Quality Checks With Python 3.9 and Lint
       uses: ./.github/workflows/reusable-quality.yml
       with:
         python-version: '3.9'
         action: 'lint'
   
   quality-checks-v2:
-    - name: Unsupported Python Version
+      name: Unsupported Python Version
       uses: ./.github/workflows/reusable-quality.yml
       with:
         python-version: '3.8'
         action: 'lint'
   
   quality-checks-v3:
-    - name: Run Quality Checks With Python 3.9 and Test
+      name: Run Quality Checks With Python 3.9 and Test
       uses: ./.github/workflows/reusable-quality.yml
       with:
         python-version: '3.9'
         action: 'test'  
   
   quality-check-v4:
-    - name: Run Quality Checks With Python 3.10 and Lint
+      name: Run Quality Checks With Python 3.10 and Lint
       uses: ./.github/workflows/reusable-quality.yml
       with:
         python-version: '3.10'
         action: 'lint'
 
   quality-checks-v5:
-    - name: Run Quality Checks With Python 3.10 and Test
+      name: Run Quality Checks With Python 3.10 and Test
       uses: ./.github/workflows/reusable-quality.yml
       with:
         python-version: '3.10'
