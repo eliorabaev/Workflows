@@ -1,0 +1,27 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+      
+jobs:
+  quality-checks:
+    runs-on: ubuntu-latest
+    steps:
+      - run-quality-checks:
+          name: Run Quality Checks With Python 3.9 and Lint
+          uses: ./.github/workflows/reusable-quality.yml
+          with:
+            python-version: 3.9
+            action: lint
+            
+      - unsupported-python:
+          uses: ./.github/workflows/reusable-quality.yml
+          with:
+            python-version: 3.8
+
+        

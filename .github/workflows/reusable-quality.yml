@@ -1,0 +1,50 @@
+on:
+  workflow_dispatch:
+    inputs:
+      python-version:
+        description: 'Python version to use'
+        required: true
+        type: string
+      action:
+        description: 'Action to run'
+        required: true
+        type: string
+      
+jobs:
+  run-quality-checks:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.inputs.python-version == '3.9' || github.event.inputs.python-version == '3.10' }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ github.event.inputs.python-version }}
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run quality checks
+        run: |
+          if [ "${{ github.event.inputs.action }}" == "lint" ]; then
+            flake8 src test
+          elif [ "${{ github.event.inputs.action }}" == "test" ]; then
+            PYTHONPATH= src pytest
+          else
+            echo "Invalid action specified."
+            exit 1
+          fi
+
+  unsupported-python:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.inputs.python-version != '3.9' && github.event.inputs.python-version != '3.10' }}
+    steps:
+      - name: Unsupported Python Version
+        run: |
+          echo "The specified Python version ${{ github.event.inputs.python-version }} is not supported. Only 3.9 and 3.10 are allowed."
+          exit 1
+
