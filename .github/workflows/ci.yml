@@ -23,7 +23,7 @@ jobs:
         python-version: '3.9'
         action: 'test'  
   
-  quality-check-v3:
+  quality-checks-v3:
       name: Run Quality Checks With Python 3.10 and Lint
       uses: ./.github/workflows/reusable-quality.yml
       with:
@@ -40,7 +40,7 @@ jobs:
   build-docker-image:
       name: Build Docker Image
       runs-on: ubuntu-latest
-      needs: [quality-checks-v1, quality-checks-v2, quality-checks-v3, quality-check-v4]
+      needs: [quality-checks-v1, quality-checks-v2, quality-checks-v3, quality-checks-v4]
       steps:
         - name: Checkout code
           uses: actions/checkout@v2
