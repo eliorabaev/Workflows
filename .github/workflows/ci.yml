@@ -12,6 +12,9 @@ jobs:
   quality-checks:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
       - name: Run Quality Checks With Python 3.9 and Lint
         uses: ./.github/workflows/reusable-quality.yml
         with:
