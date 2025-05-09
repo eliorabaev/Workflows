@@ -31,9 +31,9 @@ jobs:
       - name: Run quality checks
         run: |
           if [ "${{ inputs.action }}" == "lint" ]; then
-            flake8 src test
+            flake8 src tests
           elif [ "${{ inputs.action }}" == "test" ]; then
-            PYTHONPATH= src pytest
+            PYTHONPATH=./src pytest
           else
             echo "Invalid action specified."
             exit 1
