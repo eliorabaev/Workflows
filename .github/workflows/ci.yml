@@ -17,31 +17,39 @@ jobs:
         action: 'lint'
   
   quality-checks-v2:
-      name: Unsupported Python Version
-      uses: ./.github/workflows/reusable-quality.yml
-      with:
-        python-version: '3.8'
-        action: 'lint'
-  
-  quality-checks-v3:
       name: Run Quality Checks With Python 3.9 and Test
       uses: ./.github/workflows/reusable-quality.yml
       with:
         python-version: '3.9'
         action: 'test'  
   
-  quality-check-v4:
+  quality-check-v3:
       name: Run Quality Checks With Python 3.10 and Lint
       uses: ./.github/workflows/reusable-quality.yml
       with:
         python-version: '3.10'
         action: 'lint'
 
-  quality-checks-v5:
+  quality-checks-v4:
       name: Run Quality Checks With Python 3.10 and Test
       uses: ./.github/workflows/reusable-quality.yml
       with:
         python-version: '3.10'
         action: 'test'
 
-        
+  build-docker-image:
+      name: Build Docker Image
+      runs-on: ubuntu-latest
+      depends-on: [quality-checks-v1, quality-checks-v2, quality-checks-v3, quality-check-v4]
+      steps:
+        - name: Checkout code
+          uses: actions/checkout@v2
+
+        - name: Set up Docker Buildx
+          uses: docker/setup-buildx-action@v1
+
+        - name: Build and push Docker image
+          uses: docker/build-push-action@v2
+          with:
+            context: .
+            file: Dockerfile        
