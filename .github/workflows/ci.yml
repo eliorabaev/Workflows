@@ -9,40 +9,39 @@ on:
       - main
       
 jobs:
-  quality-checks:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+  quality-checks-v1:
+    - name: Run Quality Checks With Python 3.9 and Lint
+      uses: ./.github/workflows/reusable-quality.yml
+      with:
+        python-version: '3.9'
+        action: 'lint'
+  
+  quality-checks-v2:
+    - name: Unsupported Python Version
+      uses: ./.github/workflows/reusable-quality.yml
+      with:
+        python-version: '3.8'
+        action: 'lint'
+  
+  quality-checks-v3:
+    - name: Run Quality Checks With Python 3.9 and Test
+      uses: ./.github/workflows/reusable-quality.yml
+      with:
+        python-version: '3.9'
+        action: 'test'  
+  
+  quality-check-v4:
+    - name: Run Quality Checks With Python 3.10 and Lint
+      uses: ./.github/workflows/reusable-quality.yml
+      with:
+        python-version: '3.10'
+        action: 'lint'
 
-      - name: Run Quality Checks With Python 3.9 and Lint
-        uses: ./.github/workflows/reusable-quality.yml
-        with:
-          python-version: '3.9'
-          action: 'lint'
-
-      - name: Unsupported Python Version
-        uses: ./.github/workflows/reusable-quality.yml
-        with:
-          python-version: '3.8'
-          action: 'lint'
-
-      - name: Run Quality Checks With Python 3.9 and Test
-        uses: ./.github/workflows/reusable-quality.yml
-        with:
-          python-version: '3.9'
-          action: 'test'  
-
-      - name: Run Quality Checks With Python 3.10 and Lint
-        uses: ./.github/workflows/reusable-quality.yml
-        with:
-          python-version: '3.10'
-          action: 'lint'
-
-      - name: Run Quality Checks With Python 3.10 and Test
-        uses: ./.github/workflows/reusable-quality.yml
-        with:
-          python-version: '3.10'
-          action: 'test'
+  quality-checks-v5:
+    - name: Run Quality Checks With Python 3.10 and Test
+      uses: ./.github/workflows/reusable-quality.yml
+      with:
+        python-version: '3.10'
+        action: 'test'
 
         
