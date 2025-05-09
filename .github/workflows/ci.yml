@@ -18,10 +18,33 @@ jobs:
           with:
             python-version: 3.9
             action: lint
-            
+
       - unsupported-python:
+          name: Unsupported Python Version
           uses: ./.github/workflows/reusable-quality.yml
           with:
             python-version: 3.8
+            action: lint
+
+      - run-quality-checks:
+          name: Run Quality Checks With Python 3.9 and Test
+          uses: ./.github/workflows/reusable-quality.yml
+          with:
+            python-version: 3.9
+            action: test  
+
+      - run-quality-checks:
+          name: Run Quality Checks With Python 3.10 and Lint
+          uses: ./.github/workflows/reusable-quality.yml
+          with:
+            python-version: 3.10
+            action: lint
+
+      - run-quality-checks:
+          name: Run Quality Checks With Python 3.10 and Test
+          uses: ./.github/workflows/reusable-quality.yml
+          with:
+            python-version: 3.10
+            action: test
 
         
