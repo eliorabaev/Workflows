@@ -40,7 +40,7 @@ jobs:
   build-docker-image:
       name: Build Docker Image
       runs-on: ubuntu-latest
-      depends-on: [quality-checks-v1, quality-checks-v2, quality-checks-v3, quality-check-v4]
+      needs: [quality-checks-v1, quality-checks-v2, quality-checks-v3, quality-check-v4]
       steps:
         - name: Checkout code
           uses: actions/checkout@v2
