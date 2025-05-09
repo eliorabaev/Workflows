@@ -13,7 +13,7 @@ on:
 jobs:
   run-quality-checks:
     runs-on: ubuntu-latest
-    if: ${{ github.event.inputs.python-version == '3.9' || github.event.inputs.python-version == '3.10' }}
+    if: ${{ inputs.python-version == '3.9' || inputs.python-version == '3.10' }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -21,7 +21,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
-          python-version: ${{ github.event.inputs.python-version }}
+          python-version: ${{ inputs.python-version }}
 
       - name: Install dependencies
         run: |
@@ -30,9 +30,9 @@ jobs:
 
       - name: Run quality checks
         run: |
-          if [ "${{ github.event.inputs.action }}" == "lint" ]; then
+          if [ "${{ inputs.action }}" == "lint" ]; then
             flake8 src test
-          elif [ "${{ github.event.inputs.action }}" == "test" ]; then
+          elif [ "${{ inputs.action }}" == "test" ]; then
             PYTHONPATH= src pytest
           else
             echo "Invalid action specified."
@@ -41,10 +41,10 @@ jobs:
 
   unsupported-python:
     runs-on: ubuntu-latest
-    if: ${{ github.event.inputs.python-version != '3.9' && github.event.inputs.python-version != '3.10' }}
+    if: ${{ inputs.python-version != '3.9' && inputs.python-version != '3.10' }}
     steps:
       - name: Unsupported Python Version
         run: |
-          echo "The specified Python version ${{ github.event.inputs.python-version }} is not supported. Only 3.9 and 3.10 are allowed."
+          echo "The specified Python version ${{ inputs.python-version }} is not supported. Only 3.9 and 3.10 are allowed."
           exit 1
 
